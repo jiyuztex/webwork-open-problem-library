@@ -1,0 +1,61 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+
+);
+
+Context()->variables;
+
+
+$a10 = non_zero_random(-10,10,1);
+$a11 = non_zero_random(-10,10,1);
+$a12 = non_zero_random(-10,10,1);
+
+$a20 = non_zero_random(-10,10,1);
+$a21 = non_zero_random(-10,10,1);
+$a22 = non_zero_random(-10,10,1);
+
+$m = non_zero_random(-6,6,1);
+
+
+$x = $a10 + $m*$a20;
+$y = $a11 + $m*$a21;
+$z = $a12 + $m*$a22;
+
+
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+
+The point \( (p,$y,q) \) is on the line with parametric equations: $BR $BR
+
+\(\displaystyle \begin{array}{l} x = $a10 + $a20 t \\ y = $a11 + $a21 t \\ z = $a12 + $a22 t \end{array} \) $BR $BR
+
+Determine the values of \(p\) and \(q\). $BR $BR
+
+p = \{ans_rule(10)\} $BR $BR
+
+q = \{ans_rule(10)\}
+
+$BR
+$BR
+
+END_TEXT
+Context()->normalStrings;
+
+
+
+ANS( num_cmp($x) );
+ANS( num_cmp($z) );
+
+
+ENDDOCUMENT();
