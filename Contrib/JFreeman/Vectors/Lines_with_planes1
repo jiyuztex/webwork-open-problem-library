@@ -1,0 +1,85 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines with planes)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+"parserVectorUtils.pl",
+
+);
+
+
+Context("Vector");
+Context()->flags->set( ijk=>1 );
+
+Context()->constants->set(
+  i => {TeX => "\mathit{\vec i}"},
+  j => {TeX => "\mathit{\vec j}"},
+  k => {TeX => "\mathit{\vec k}"},
+);
+
+$showPartialCorrectAnswers = 1;
+
+
+@a1 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+@a2 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+
+@b1 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+@b2 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+
+@zans = (@a1[0] - @a2[0]*@a1[2]/@a2[2], @a1[1] - @a2[1]*@a1[2]/@a2[2], @a1[2] - @a2[2]*@a1[2]/@a2[2]);
+
+@yans = (@a1[0] - @a2[0]*@a1[1]/@a2[1], @a1[1] - @a2[1]*@a1[1]/@a2[1], @a1[2] - @a2[2]*@a1[1]/@a2[1]);
+
+@xans = (@a1[0] - @a2[0]*@a1[0]/@a2[0], @a1[1] - @a2[1]*@a1[0]/@a2[0], @a1[2] - @a2[2]*@a1[0]/@a2[0]);
+
+$veca1 = Vector( @a1 );
+$veca2 = Vector( @a2 );
+
+$vecb1 = Vector( @b1 );
+$vecb2 = Vector( @b2 );
+
+$z = Point( @zans );
+$y = Point (@yans );
+$x = Point (@xans );
+
+
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+
+Find the coordinates of the point where the line given by $BR
+\(\displaystyle \left( \begin{array}{c} @a1[0] \\ @a1[1] \\ @a1[2] \end{array}\right) + \left( \begin{array}{c} @a2[0] \\ @a2[1] \\ @a2[2] \end{array}\right) t \) 
+$BR
+intersects:
+$BR
+$BR
+The \(XOY\) plane: \{ans_rule(20)\}
+
+$BR
+$BR
+The \(YOZ\) plane: \{ans_rule(20)\}
+
+$BR
+$BR
+The \(XOZ\) plane: \{ans_rule(20)\}
+
+
+
+
+END_TEXT
+Context()->normalStrings;
+
+
+
+ANS( $z->cmp() );
+ANS( $x->cmp() );
+ANS( $y->cmp() );
+
+ENDDOCUMENT();   
