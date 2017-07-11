@@ -1,0 +1,79 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+"unorderedAnswer.pl",
+);
+
+Context()->variables;
+
+$t = random(5,8,1);
+$u = random(1,$t-1,1);
+
+Context("Vector");
+Context()->flags->set( ijk=>1 );
+
+Context()->constants->set(
+  i => {TeX => "\mathit{\vec i}"},
+  j => {TeX => "\mathit{\vec j}"},
+  k => {TeX => "\mathit{\vec k}"},
+);
+
+$showPartialCorrectAnswers = 1;
+
+@a1 = ( non_zero_random(-3,3,1), non_zero_random(-3,3,1), non_zero_random(-3,3,1) );
+@a2 = ( non_zero_random(-3,3,1), non_zero_random(-3,3,1), non_zero_random(-3,3,1) );
+
+@perp = (0, @a2[2], -1*@a2[1]);
+
+@c1 = (@a1[0] + @perp[0] + $t*@a2[0], @a1[1] + @perp[1] + $t*@a2[1], @a1[2] + @perp[2] + $t*@a2[2]);
+
+@b1 = (@a1[0] + ($t-$u)*@a2[0], @a1[1] + ($t-$u)*@a2[1], @a1[2] + ($t-$u)*@a2[2]);
+
+@b2 = (@a1[0] + ($t+$u)*@a2[0], @a1[1] + ($t+$u)*@a2[1], @a1[2] +  ($t+$u)*@a2[2]);
+
+## define these as vectors
+
+$veca1 = Vector( @a1 );
+$veca2 = Vector( @a2 );
+$vecperp = Vector( @perp );
+$pointb1 = Point( @b1 );
+$pointb2 = Point( @b2 );
+$pointc = Point( @c1 );
+
+Context()->variables;
+
+$dist2 = (@c1[0] - @b1[0])**2 + (@c1[1] - @b1[1])**2 + (@c1[2] - @b1[2])**2;
+
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+
+Find the points on the line with parametric equations: $BR
+
+\(\displaystyle \left[ \begin{array}{l} x(t) = @a1[0]+ @a2[0] t\\ y(t) = @a1[1]+ @a2[1] t \\ z(t) = @a1[2]+ @a2[2] t \end{array} \) $BR
+
+which are \( \sqrt{$dist2} \) from the point \($pointc\).
+
+$BR
+$BR
+
+Point 1: \{ans_rule(20) \} $BR
+Point 2: \{ans_rule(20) \}
+
+END_TEXT
+Context()->normalStrings;
+
+UNORDERED_ANS( 
+$pointb1->cmp(),
+$pointb2->cmp() );
+
+ENDDOCUMENT();
