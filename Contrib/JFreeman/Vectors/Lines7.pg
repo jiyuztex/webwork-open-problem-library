@@ -1,0 +1,95 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+"parserVectorUtils.pl",
+
+);
+
+
+Context("Vector");
+Context()->flags->set( ijk=>1 );
+
+Context()->constants->set(
+  i => {TeX => "\mathit{\vec i}"},
+  j => {TeX => "\mathit{\vec j}"},
+  k => {TeX => "\mathit{\vec k}"},
+);
+
+$showPartialCorrectAnswers = 0;
+
+
+@a1 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+@a2 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+
+@b1 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+@b2 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+
+@c1 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+@c2 = ( non_zero_random(-10,10,1), non_zero_random(-10,10,1), non_zero_random(-10,10,1) );
+
+
+$veca1 = Vector( @a1 );
+$veca2 = Vector( @a2 );
+
+$vecb1 = Vector( @b1 );
+$vecb2 = Vector( @b2 );
+
+$vecc1 = Vector( @c1 );
+$vecc2 = Vector( @c2 );
+
+
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+
+Determine the direction of each line. Write your answer as a vector in the notation < \(v_1,v_2,v_3\) >.
+ $BR $BR
+
+A. \(\displaystyle \left( \begin{array}{c} @a1[0] \\ @a1[1] \\ @a1[2] \end{array}\right) + \left( \begin{array}{c} @a2[0] \\ @a2[1] \\ @a2[2] \end{array}\right) t \) 
+
+$BR
+$BR
+
+Direction: \{ans_rule(20)\}
+
+$BR
+$BR
+$BR
+
+B. \(\displaystyle\frac{x-@b1[0]}{@b2[0]}=\frac{y-@b1[1]}{@b2[1]}=\frac{z-@b1[2]}{@b2[2]}\)
+
+$BR
+$BR
+
+Direction: \{ans_rule(20)\}
+
+$BR
+$BR
+$BR
+
+C. \(\displaystyle \left[ \begin{array}{l} x(t) = @c1[0]+ @c2[0] t\\ y(t) = @c1[1]+ @c2[1] t \\ z(t) = @c1[2]+ @c2[2] t \end{array} \) 
+
+$BR
+$BR
+
+Direction: \{ans_rule(20)\}
+
+END_TEXT
+Context()->normalStrings;
+
+
+
+ANS( $veca2->cmp( parallel=>1 ) );
+ANS( $vecb2->cmp( parallel=>1 ) );
+ANS( $vecc2->cmp( parallel=>1 ) );
+
+ENDDOCUMENT();   
