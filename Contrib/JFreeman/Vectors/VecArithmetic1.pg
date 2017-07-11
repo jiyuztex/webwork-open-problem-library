@@ -1,0 +1,43 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Vectors and vector arithmetic)
+## Author(Justin Freeman)
+## Level(4)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+Context("Numeric");
+
+$a = non_zero_random(3,6,.1);
+$b = non_zero_random(1,2,.1);
+
+$answer1=sqrt($a*$a+$b*$b);
+$answer2=(180/pi)*atan($b/$a);
+$answer4=sqrt($a**2-$b**2);
+$answer3=(180/pi)*asin($b/$a);
+
+Context()->texStrings;
+BEGIN_TEXT
+A boat which travels at $a meters per second is attempting to cross a river. The current in the river is $b meters per second (and the current is perpendicular to the direction in which the boat needs to travel in order to cross). $BR
+Suppose the boat's operator ignores the current. Then it will travel with speed \{ ans_rule(20) \} in a direction \{ ans_rule(20) \} degrees different from straight across. $BR
+Now suppose the boat's operator realizes that there is a current. If the boat aims at an angle to the direction it needs to travel, then this angle will be \{ ans_rule(20) \} degrees, and the boat's actual speed will be \{ ans_rule(20) \}.
+
+END_TEXT
+Context()->normalStrings;
+
+$showPartialCorrectAnswers = 1;
+
+ANS( num_cmp($answer1) );
+ANS( num_cmp($answer2) );
+ANS( num_cmp($answer3) );
+ANS( num_cmp($answer4) );
+
+ENDDOCUMENT();
