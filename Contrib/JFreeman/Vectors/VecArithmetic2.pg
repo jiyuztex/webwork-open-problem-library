@@ -1,0 +1,45 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Vectors and vector arithmetic)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+Context("Numeric");
+
+$a = non_zero_random(10,40,10);
+$b = non_zero_random(80,180,20);
+$v = non_zero_random(1.5,2.5,.1);
+$w = non_zero_random(.2,.8,.1);
+
+$c=$a/$b;
+$d=$w/$v;
+
+$x=($d+$c*sqrt(1+$c**2-$d**2))/(1+$c**2);
+
+$answer=180/pi * acos($x);
+
+
+Context()->texStrings;
+BEGIN_TEXT
+A swimmer is attempting to cross a $b meter wide river. Because much of the shore is rocky, she needs to exit the river $a meters upstream of the point directly across from where she enters the river. She swims at a speed of $v m/s in still water, and the current flows at a speed $w m/s. $BR
+The direction the swimmer should aim makes an angle of \{ ans_rule(10) \} degrees with the shore of the river.
+
+END_TEXT
+Context()->normalStrings;
+
+$showPartialCorrectAnswers = 1;
+
+ANS( num_cmp($answer) );
+
+
+ENDDOCUMENT();
