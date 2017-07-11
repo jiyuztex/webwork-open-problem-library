@@ -1,0 +1,188 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserMultiAnswer.pl",
+"AnswerFormatHelp.pl",
+"parserAssignment.pl",
+"PGmatrixmacros.pl",
+);
+
+TEXT(beginproblem());
+
+## Create random number for vectors
+Context("Numeric");
+
+$g1=non_zero_random(-10,10,1);
+$g2=non_zero_random(-10,10,1);
+$g3=non_zero_random(-10,10,1);
+
+$h1=non_zero_random(-5,5,1);
+$h2=non_zero_random(-5,5,1);
+$h3=non_zero_random(-5,5,1);
+
+$i1=$g1;
+$i2=$g2;
+$i3=$g3;
+
+$j1=non_zero_random(-5,5,1);
+$j2=non_zero_random(-5,5,1);
+$j3=non_zero_random(-5,5,1);
+
+$k1=non_zero_random(-10,10,1);
+$k2=non_zero_random(-10,10,1);
+$k3=non_zero_random(-10,10,1);
+
+$l1=$j1;
+$l2=$j2;
+$l3=$j3;
+
+## Create answers for matching
+
+$a = random(1,3,1);
+$b = random(1,3,1);
+$c = random(1,3,1);
+$d = random(1,3,1);
+$e = random(1,3,1);
+$f = random(1,3,1);
+
+## Create multipliers to obfuscate
+
+$hm1 = non_zero_random(-2,2,1);
+$hm2 = non_zero_random(-2,2,1);
+$hm3 = non_zero_random(-2,2,1);
+$hm4 = non_zero_random(-2,2,1);
+$hm5 = non_zero_random(-2,2,1);
+$hm6 = non_zero_random(-2,2,1);
+$hm7 = non_zero_random(-2,2,1);
+$hm8 = non_zero_random(-2,2,1);
+$hm9 = non_zero_random(-2,2,1);
+
+## Redefine Vectors
+
+$hs1=$h1*$hm1;
+$hs2=$h2*$hm1;
+$hs3=$h3*$hm1;
+
+$js1=$j1*$hm2;
+$js2=$j2*$hm2;
+$js3=$j3*$hm2;
+
+$ls1=$l1*$hm3;
+$ls2=$l2*$hm3;
+$ls3=$l3*$hm3;
+
+$ra = non_zero_random(-5,5,1);
+$rb = non_zero_random(-5,5,1);
+$rc = non_zero_random(-5,5,1);
+$rd = non_zero_random(-5,5,1);
+$re = non_zero_random(-5,5,1);
+$rf = non_zero_random(-5,5,1);
+
+## Create modified definitions of lines
+
+if ($a==1){$a1=$g1+$ra*$h1;$a2=$g2+$ra*$h2;$a3=$g3+$ra*$h3;
+              $m1=$hm4*$h1;$m2=$hm4*$h2;$m3=$hm4*$h3;}
+	else {if ($a==2){$a1=$i1+$ra*$j1;$a2=$i2+$ra*$j2;$a3=$i3+$ra*$j3;
+              $m1=$hm4*$j1;$m2=$hm4*$j2;$m3=$hm4*$j3;}
+	else {$a1=$k1+$ra*$l1;$a2=$k2+$ra*$l2;$a3=$k3+$ra*$l3;
+              $m1=$hm4*$l1;$m2=$hm4*$l2;$m3=$hm4*$l3;}}
+
+if ($b==1){$b1=$g1+$rb*$h1;$b2=$g2+$rb*$h2;$b3=$g3+$rb*$h3;
+              $n1=$hm5*$h1;$n2=$hm5*$h2;$n3=$hm5*$h3;}
+	else {if ($b==2){$b1=$i1+$rb*$j1;$b2=$i2+$rb*$j2;$b3=$i3+$rb*$j3;
+              $n1=$hm5*$j1;$n2=$hm5*$j2;$n3=$hm5*$j3;}
+	else {$b1=$k1+$rb*$l1;$b2=$k2+$rb*$l2;$b3=$k3+$rb*$l3;
+              $n1=$hm5*$l1;$n2=$hm5*$l2;$n3=$hm5*$l3;}}
+
+if ($c==1){$c1=$g1+$rc*$h1;$c2=$g2+$rc*$h2;$c3=$g3+$rc*$h3;
+              $o1=$hm6*$h1;$o2=$hm6*$h2;$o3=$hm6*$h3;}
+	else {if ($c==2){$c1=$i1+$rc*$j1;$c2=$i2+$rc*$j2;$c3=$i3+$rc*$j3;
+              $o1=$hm6*$j1;$o2=$hm6*$j2;$o3=$hm6*$j3;}
+	else {$c1=$k1+$rc*$l1;$c2=$k2+$rc*$l2;$c3=$k3+$rc*$l3;
+              $o1=$hm6*$l1;$o2=$hm6*$l2;$o3=$hm6*$l3;}}
+
+if ($d==1){$d1=$g1+$rd*$h1;$d2=$g2+$rd*$h2;$d3=$g3+$rd*$h3;
+              $p1=$hm7*$h1;$p2=$hm7*$h2;$p3=$hm7*$h3;}
+	else {if ($d==2){$d1=$i1+$rd*$j1;$d2=$i2+$rd*$j2;$d3=$i3+$rd*$j3;
+              $p1=$hm7*$j1;$p2=$hm7*$j2;$p3=$hm7*$j3;}
+	else {$d1=$k1+$rd*$l1;$d2=$k2+$rd*$l2;$d3=$k3+$rd*$l3;
+              $p1=$hm7*$l1;$p2=$hm7*$l2;$p3=$hm7*$l3;}}
+
+if ($e==1){$e1=$g1+$re*$h1;$e2=$g2+$re*$h2;$e3=$g3+$re*$h3;
+              $q1=$hm8*$h1;$q2=$hm8*$h2;$q3=$hm8*$h3;}
+	else {if ($e==2){$e1=$i1+$re*$j1;$e2=$i2+$re*$j2;$e3=$i3+$re*$j3;
+              $q1=$hm8*$j1;$q2=$hm8*$j2;$q3=$hm8*$j3;}
+	else {$e1=$k1+$re*$l1;$e2=$k2+$re*$l2;$e3=$k3+$re*$l3;
+              $q1=$hm8*$l1;$q2=$hm8*$l2;$q3=$hm8*$l3;}}
+
+if ($f==1){$f1=$g1+$rf*$h1;$f2=$g2+$rf*$h2;$f3=$g3+$rf*$h3;
+              $r1=$hm9*$h1;$r2=$hm9*$h2;$r3=$hm9*$h3;}
+	else {if ($f==2){$f1=$i1+$rf*$j1;$f2=$i2+$rf*$j2;$f3=$i3+$rf*$j3;
+              $r1=$hm9*$j1;$r2=$hm9*$j2;$r3=$hm9*$j3;}
+	else {$f1=$k1+$rf*$l1;$f2=$k2+$rf*$l2;$f3=$k3+$rf*$l3;
+              $r1=$hm9*$l1;$r2=$hm9*$l2;$r3=$hm9*$l3;}}
+
+
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+$j3 $hm2 $js3
+Consider the three lines determined by the vector equation. Then, for each problem (A-F), write the number of the vector equation which gives the same line as the parametric or Cartesian equation. $BR $BR
+
+1. \(\left(\begin{array}{c} $g1 \\ $g2 \\ $g3 \end{array}\right) + \lambda \left(\begin{array}{c} $hs1 \\ $hs2 \\ $hs3 \end{array}\right) \). $BR $BR
+
+2. \(\left(\begin{array}{c} $i1 \\ $i2 \\ $i3 \end{array}\right) + \lambda \left(\begin{array}{c} $js1 \\ $js2 \\ $js3 \end{array}\right) \). $BR $BR
+
+3. \(\left(\begin{array}{c} $k1 \\ $k2 \\ $k3 \end{array}\right) + \lambda \left(\begin{array}{c} $ls1 \\ $ls2 \\ $ls3 \end{array}\right) \). $BR $BR $BR
+
+\{ ans_rule(10) \} A. \(\displaystyle \frac{x-$a1}{$m1}=\frac{y-$a2}{$m2}=\frac{z-$a3}{$m3} \)
+$BR
+$BR
+\{ ans_rule(10) \} B.\(\displaystyle \frac{x-$b1}{$n1}=\frac{y-$b2}{$n2}=\frac{z-$b3}{$n3} \)
+$BR
+$BR
+\{ ans_rule(10) \} C. \(\displaystyle \frac{x-$c1}{$o1}=\frac{y-$c2}{$o2}=\frac{z-$c3}{$o3} \)
+
+$BR
+$BR
+\{ ans_rule(10) \} D. \(\begin{array}{l} x = $d1 + $p1 t \\ y = $d2 + $p2 t \\ z = $d3 + $p3 t \end{array} \)
+$BR
+$BR
+$BR
+\{ ans_rule(10) \} E. \(\begin{array}{l} x = $e1 + $q1 t \\ y = $e2 + $q2 t \\ z = $e3 + $q3 t \end{array} \)
+$BR
+$BR
+$BR
+\{ ans_rule(10) \} F. \(\begin{array}{l} x = $f1 + $r1 t \\ y = $f2 + $r2 t \\ z = $f3 + $r3 t \end{array} \)
+$BR
+
+END_TEXT
+
+Context()->normalStrings;
+
+install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 0;
+
+ANS(num_cmp($a));
+ANS(num_cmp($b));
+ANS(num_cmp($c));
+ANS(num_cmp($d));
+ANS(num_cmp($e));
+ANS(num_cmp($f));
+
+
+Context()->normalStrings;
+
+COMMENT('MathObject version.');
+ENDDOCUMENT();
