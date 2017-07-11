@@ -1,0 +1,231 @@
+
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();      
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserMultiAnswer.pl",
+"AnswerFormatHelp.pl",
+"parserAssignment.pl",
+"PGmatrixmacros.pl"
+);
+
+TEXT(beginproblem());
+
+
+##########################
+#  Setup
+
+Context("Numeric");
+Context()->variables->are(t=>"Real",x=>"Real",y=>"Real");
+Context()->variables->set(t=>{limits=>[0,10]});
+parser::Assignment->Allow;
+
+$a1 = non_zero_random(-5,5,1);
+$a2 = non_zero_random(-5,5,1);
+
+$b1 = random(-10,10,1);
+$b2 = random(-10,10,1);
+
+$c1 = non_zero_random(-8,8,1);
+$c2 = non_zero_random(-8,8,1);
+
+$d1 = random(-10,10,1);
+$d2 = random(-10,10,1);
+
+$e1 = non_zero_random(-8,8,1);
+$e2 = non_zero_random(-8,8,1);
+
+$f1 = random(-6,6,1);
+$f2 = 0;
+
+$g1 = random(-8,8,1);
+$g2 = random(-8,8,1);
+
+$i1 = non_zero_random(-5,5,1);
+$i2 = non_zero_random(-5,5,1);
+
+$h1 = $g1 + $i1;
+$h2 = $g2 + $i2;
+
+$x1 = Formula("$b1 + ($a1)*t");
+$y1 = Formula("$b2 + ($a2)*t");
+
+$x2 = Formula("$d1 - ($c2)*t");
+$y2 = Formula("$d2 + ($c1)*t");
+
+$x3 = Formula("$f1 + ($e1)*t");
+$y3 = Formula("$f2 + ($e2)*t");
+
+$x4 = Formula("$g1 + ($i1)*t");
+$y4 = Formula("$g2 + ($i2)*t");
+
+
+
+$multians1 = MultiAnswer($x1, $y1)->with(
+  singleResult => 1,
+  checker => sub {
+      my ( $correct, $student, $self ) = @_;
+      my ( $xstu, $ystu) = @{$student};
+      return 0 unless $xstu->isFormula;
+      if ($a2*$xstu-$a1*$ystu==$a2*$b1-$a1*$b2) {
+            return 1;
+      } else {
+            return 0;
+      }
+  }
+);
+
+$ans1 = Formula("y=$b2+($a2/$a1)*(x-$b1)");
+
+
+$multians2 = MultiAnswer($x2, $y2)->with(
+  singleResult => 1,
+  checker => sub {
+      my ( $correct, $student, $self ) = @_;
+      my ( $xstu, $ystu) = @{$student};
+      return 0 unless $xstu->isFormula;
+      if ($c1*$xstu+$c2*$ystu==$c1*$d1+$c2*$d2) {
+            return 1;
+      } else {
+            return 0;
+      }
+  }
+);
+
+$ans2 = Formula("y=$d2-($c1/$c2)*(x-$d1)");
+
+$multians3 = MultiAnswer($x3, $y3)->with(
+  singleResult => 1,
+  checker => sub {
+      my ( $correct, $student, $self ) = @_;
+      my ( $xstu, $ystu) = @{$student};
+      return 0 unless $xstu->isFormula;
+      if ($e2*$xstu-$e1*$ystu==$e2*$f1-$e1*$f2) {
+            return 1;
+      } else {
+            return 0;
+      }
+  }
+);
+
+$ans3 = Formula("y=$f2+($e2/$e1)*(x-$f1)");
+
+$multians4 = MultiAnswer($x4, $y4)->with(
+  singleResult => 1,
+  checker => sub {
+      my ( $correct, $student, $self ) = @_;
+      my ( $xstu, $ystu) = @{$student};
+      return 0 unless $xstu->isFormula;
+      if ($i2*$xstu-$i1*$ystu==$i2*$g1-$i1*$g2) {
+            return 1;
+      } else {
+            return 0;
+      }
+  }
+);
+
+$ans4 = Formula("y=$g2+($i2/$i1)*(x-$g1)");
+
+
+
+##########################
+#  Main Text 
+
+Context()->texStrings;
+BEGIN_TEXT
+Give both a parametric and a Cartesian equation for each of the following lines. Use \(t\) as the parameter when expressing your answer parametrically. Your Cartesian equations must be solved for \(y\): $BR
+
+(a) In the direction of \(\left(\begin{array}{c} $a1 \\ $a2 \end{array}\right)\) and through the point \( ($b1,$b2) \). $BR
+Parametric:
+$BR
+\( x(t) = \) \{$multians1->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+\( y(t) = \) \{$multians1->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+Cartesian (in slope-intercept form):
+$BR
+\{$ans1->ans_rule(20)\}
+$BR
+$BR
+
+
+(b) Perpendicular to \(\left(\begin{array}{c} $c1 \\ $c2 \end{array}\right)\) and through the point \( ($d1,$d2) \). $BR
+Parametric:
+$BR
+\( x(t) = \) \{$multians2->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+\( y(t) = \) \{$multians2->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+Cartesian (in slope-intercept form):
+$BR
+\{$ans2->ans_rule(20)\}
+$BR
+$BR
+
+
+(c) Parallel to \($e1\mathbf{i}+$e2\mathbf{j}\) and cutting the \(x\)-axis at $f1. $BR
+Parametric:
+$BR
+\( x(t) = \) \{$multians3->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+\( y(t) = \) \{$multians3->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+Cartesian (in slope-intercept form):
+$BR
+\{$ans3->ans_rule(20)\}
+$BR
+$BR
+
+(d) Passing through the points \(($g1,$g2)\) and \(($h1,$h2)\). $BR
+Parametric:
+$BR
+\( x(t) = \) \{$multians4->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+\( y(t) = \) \{$multians4->ans_rule(20)\}
+\{ AnswerFormatHelp("formulas") \}
+$BR
+Cartesian (in slope-intercept form):
+$BR
+\{$ans4->ans_rule(20)\}
+$BR
+
+
+
+END_TEXT
+Context()->normalStrings;
+
+
+########################
+#  Answer Evaluation
+
+$showPartialCorrectAnswers = 1;
+
+ANS($multians1->cmp());
+ANS($ans1->cmp());
+ANS($multians2->cmp());
+ANS($ans2->cmp());
+ANS($multians3->cmp());
+ANS($ans3->cmp());
+ANS($multians4->cmp());
+ANS($ans4->cmp());
+
+
+Context()->normalStrings;
+
+COMMENT('MathObject version.');
+
+ENDDOCUMENT();
