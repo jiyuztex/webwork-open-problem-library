@@ -1,0 +1,69 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+"unorderedAnswer.pl",
+);
+
+
+Context()->variables;
+
+$u1 = non_zero_random(-10,10,1);
+$u2 = non_zero_random(-10,10,1);
+$u3 = non_zero_random(-10,10,1);
+
+$v1 = non_zero_random(-10,10,1);
+$v2 = non_zero_random(-10,10,1);
+$v3 = non_zero_random(-10,10,1);
+
+$w1 = non_zero_random(-10,10,1);
+$w2 = non_zero_random(-10,10,1);
+$w3 = non_zero_random(-10,10,1);
+
+$x1 = $u1 - $w1;
+$x2 = $u2 - $w2;
+$x3 = $u3 - $w3;
+
+$t = -1*($x1*$v1 + $x2*$v2 + $x3*$v3)/($v1**2 + $v2**2 + $v3**2);
+
+Context("Vector");
+Context()->flags->set( ijk=>1 );
+
+Context()->constants->set(
+  i => {TeX => "\mathit{\vec i}"},
+  j => {TeX => "\mathit{\vec j}"},
+  k => {TeX => "\mathit{\vec k}"},
+);
+
+@a = ($u1 + $v1*$t, $u2 + $v2*$t, $u3 + $v3*$t);
+$ans = Point ( @a );
+
+$showPartialCorrectAnswers = 1;
+
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+
+The perpendicular from a point to a line minimizes the distance from the point to this line. With this in mind, find foot of the perpendicular from the point \( ($w1, $w2, $w3) \) to the line
+ \( \displaystyle \left( \begin{array}{c} $u1 \\ $u2 \\ $u3 \end{array} \right) + \left( \begin{array}{c} $v1 \\ $v2 \\ $v3 \end{array} \right) t \). $BR $BR
+
+The foot of the perpendicular is: \{ ans_rule(20) \}
+
+
+
+END_TEXT
+Context()->normalStrings;
+
+
+
+ANS( $ans->cmp() );
+
+ENDDOCUMENT();
