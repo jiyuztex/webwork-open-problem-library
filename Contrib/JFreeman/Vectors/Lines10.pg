@@ -1,0 +1,60 @@
+## DBsubject(Geometry)
+## DBchapter(Vector geometry)
+## DBsection(Lines)
+## Author(Justin Freeman)
+## Level(3)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"PGchoicemacros.pl",
+"MathObjects.pl",
+"unorderedAnswer.pl",
+);
+
+
+Context()->variables;
+
+$a1 = random(-10,10,1);
+$a2 = non_zero_random(-10,10,1);
+
+$b1 = random(-10,10,1);
+$b2 = non_zero_random(-10,10,1);
+
+$c1 = random(-10,10,1);
+$c2 = non_zero_random(-10,10,1);
+
+$d1 = random(-10,10,1);
+$d2 = non_zero_random(-10,10,1);
+
+$pie = pi;
+
+$ans = (180/$pie)*acos(($a2*$c2 + $b2*$d2)/sqrt(($a2**2 + $b2**2)*($c2**2 + $d2**2)));
+if ($ans > 90){$ans = 180 - $ans};
+
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+
+Find the acute angle between the following to lines: $BR $BR
+
+\( L_1: \begin{array}{l} x = $a1 + $a2 t \\ y = $b1 + $b2 t \end{array} \) $BR
+
+$BR
+
+\( L_1: \begin{array}{l} x = $c1 + $c2 t \\ y = $d1 + $d2 t \end{array} \) $BR
+
+$BR
+$BR
+
+The angle (in degrees) is: \{ans_rule(20) \} $BR
+
+
+END_TEXT
+Context()->normalStrings;
+
+
+ANS( num_cmp($ans) );
+
+ENDDOCUMENT();
